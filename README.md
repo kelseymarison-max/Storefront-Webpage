@@ -1,19 +1,2 @@
 # Meeko-and-Umis-Pet-Emporium
-This website is being developed as a project for my product development course. Its purpose is to provide users with an organized and easy-to-use website that presents the project's planned content and features. 
-Planned Feature Roadmap
-Phase 1- Initial Setup
-  Create the basic website structure
-  Add the home page
-  Establish the initial Github repository.
-Phase 2- Core Features
-  Develop the main website content
-  Add navigation
-  Create the primary features of the website
-Phase 3 - Design and Usability
-  Improve the visual Design
-  Make the website reponsive
-  Improve usability and accessibility
-Phase 4 - Testing and Launch
-  Test website functionality
-  Fix errors and make improvements
-  Prepare the website for launch
+This website was created as a project for my SDC260 class. It is a website for a pet store that allows customers to use the navigation menu to view categories, all products, and their cart. A user is able to add products to their cart and place the order. There is also a function that allows users to contact the company and test their connectivity. 
