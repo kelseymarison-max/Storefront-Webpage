@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html>
+<head>
+<link rel="stylesheet" href="styles.css">
+<title>Confirmation</title>
+</head>
+<body>
+
+<div id="confirmation"></div>
+
+<script>
+
+const order=
+JSON.parse(
+localStorage.getItem("lastOrder")
+);
+
+document.getElementById(
+"confirmation"
+).innerHTML=`
+
+<h1>Thank You!</h1>
+
+<p>
+Your order has been placed successfully.
+</p>
+
+<p>
+Customer:
+${order.customer}
+</p>
+
+<p>
+Items Purchased:
+${order.items.length}
+</p>
+
+`;
+
+</script>
+
+</body>
+</html>

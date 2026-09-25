@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html>
+<head>
+<link rel="stylesheet" href="styles.css">
+<title>Checkout</title>
+</head>
+<body>
+
+<header>
+<h1>Checkout</h1>
+</header>
+
+<div class="card">
+
+<input
+id="name"
+placeholder="Full Name">
+
+<input
+id="address"
+placeholder="Shipping Address">
+
+<button onclick="placeOrder()">
+Complete Order
+</button>
+
+</div>
+
+<script>
+
+function placeOrder(){
+
+const order={
+
+customer:
+document.getElementById("name").value,
+
+address:
+document.getElementById("address").value,
+
+items:
+JSON.parse(localStorage.getItem("cart"))||[]
+
+};
+
+localStorage.setItem(
+"lastOrder",
+JSON.stringify(order)
+);
+
+localStorage.removeItem("cart");
+
+window.location=
+"confirmation.html";
+}
+
+</script>
+
+</body>
+</html>

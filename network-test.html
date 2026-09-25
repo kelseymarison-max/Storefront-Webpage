@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="styles.css">
+    <title>Network Connection Test</title>
+</head>
+<body>
+    <header>
+        <h1>Network Connection Test</h1>
+        <nav>
+            <a href="index.html">Home</a>
+            <a href="navigation.html">Categories</a>
+            <a href="products.html">Products</a>
+            <a href="cart.html">Cart</a>
+            <a href="contact.html">Contact</a>
+            <a href="checkout.html">Checkout</a>
+            <a href="confirmation.html">Confirmation</a>
+            <a href="network-test.html">Network Test</a>
+        </nav>
+    </header>
+
+    <main class="network-test">
+        <section class="network-card">
+            <div class="network-card-header">
+                <div>
+                    <h2>Connection Details</h2>
+                    <p>Current browser connection information.</p>
+                </div>
+                <span id="connectionStatus" class="connection-status">Checking...</span>
+            </div>
+
+            <div class="network-details">
+                <div class="network-detail">
+                    <span class="network-label">Local Host Name</span>
+                    <strong id="hostName">—</strong>
+                </div>
+
+                <div class="network-detail">
+                    <span class="network-label">Current Communication Port</span>
+                    <strong id="communicationPort">—</strong>
+                </div>
+
+                <div class="network-detail">
+                    <span class="network-label">Current Transmission Protocol</span>
+                    <strong id="transmissionProtocol">—</strong>
+                </div>
+
+                <div class="network-detail">
+                    <span class="network-label">Last Time Launched</span>
+                    <strong id="lastLaunched">—</strong>
+                </div>
+            </div>
+
+            <button type="button" id="refreshConnection">Refresh Connection Test</button>
+
+            <p class="network-note">
+                Host name, port, and protocol are read from the page's current browser connection.
+                The launch time is stored locally in this browser.
+            </p>
+        </section>
+    </main>
+
+    <script>
+        (function () {
+            const lastLaunchKey = "meekoUmiNetworkTestLastLaunch";
+
+            function formatDate(value) {
+                return new Date(value).toLocaleString(undefined, {
+                    dateStyle: "medium",
+                    timeStyle: "medium"
+                });
+            }
+
+            function runConnectionTest() {
+                const host = window.location.hostname || "Local file";
+                const port = window.location.port ||
+                    (window.location.protocol === "https:" ? "443 (default HTTPS)" :
+                     window.location.protocol === "http:" ? "80 (default HTTP)" :
+                     "N/A");
+
+                const protocol = window.location.protocol.replace(":", "").toUpperCase();
+                const now = new Date().toISOString();
+
+                document.getElementById("hostName").textContent = host;
+                document.getElementById("communicationPort").textContent = port;
+                document.getElementById("transmissionProtocol").textContent = protocol;
+                document.getElementById("lastLaunched").textContent = formatDate(now);
+
+                localStorage.setItem(lastLaunchKey, now);
+
+                const status = document.getElementById("connectionStatus");
+                status.textContent = window.location.protocol === "file:" ? "LOCAL FILE" : "CONNECTED";
+                status.className = "connection-status " +
+                    (window.location.protocol === "file:" ? "local" : "connected");
+            }
+
+            document.getElementById("refreshConnection").addEventListener("click", runConnectionTest);
+            runConnectionTest();
+        })();
+    </script>
+</body>
+</html>

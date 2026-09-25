@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <link rel="stylesheet" href="styles.css">
+    <title>Products</title>
+</head>
+<body>
+
+<header>
+    <h1>Products</h1>
+
+    <nav>
+        <a href="index.html">Home</a>
+        <a href="navigation.html">Categories</a>
+        <a href="products.html">All Products</a>
+        <a href="cart.html">Cart</a>
+        <a href="contact.html">Contact</a>
+        <a href="checkout.html">Checkout</a>
+        <a href="confirmation.html">Confirmation</a>
+                <a href="network-test.html">Network Test</a>
+        </nav>
+</header>
+
+<div id="products" class="grid"></div>
+
+<script>
+
+const params = new URLSearchParams(window.location.search);
+const categoryFilter = params.get("category");
+
+const products = [
+
+{name:'Black Rope Leash',category:'Dog Apparel',price:'$15',image:'black-rope-leash.png'},
+{name:'Training Lead',category:'Dog Apparel',price:'$18',image:'training-lead.png'},
+
+{name:'Peanut Butter Bone',category:'Dog Treats',price:'$9',image:'peanut-butter-bone.png'},
+{name:'Chicken Training Treats',category:'Dog Treats',price:'$7',image:'chicken-training-treats.png'},
+
+{name:'Multi-Level Cat Tree',category:'Cat Beds',price:'$50',image:'multi-level-cat-tree.png'},
+{name:'Plush Cat Bed',category:'Cat Beds',price:'$25',image:'plush-cat-bed.png'},
+
+{name:'Steel Bowl',category:'Pet Dishes',price:'$13',image:'steel-bowl.png'},
+{name:'Water Fountain',category:'Pet Dishes',price:'$35',image:'water-fountain.png'},
+
+{name:'Premium Dog Food',category:'Dog Food',price:'$30',image:'premium-dog-food.png'},
+{name:'Premium Cat Food',category:'Cat Food',price:'$28',image:'premium-cat-food.png'}
+
+];
+
+const container = document.getElementById("products");
+
+let displayedProducts = products;
+
+if(categoryFilter){
+    displayedProducts =
+        products.filter(
+            p => p.category === categoryFilter
+        );
+}
+
+displayedProducts.forEach(p => {
+
+    container.innerHTML += `
+
+    <div class="card">
+
+        <img
+            src="${p.image}"
+            alt="${p.name}"
+            class="product-image">
+
+        <h3>${p.name}</h3>
+
+        <p>${p.category}</p>
+
+        <p>${p.price}</p>
+
+        <button>Add To Cart</button>
+
+    </div>
+
+    `;
+});
+
+</script>
+
+</body>
+</html>

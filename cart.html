@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html>
+<head>
+<link rel="stylesheet" href="styles.css">
+<title>Cart</title>
+</head>
+<body>
+
+<header>
+<h1>Shopping Cart</h1>
+</header>
+
+<div id="cartItems"></div>
+
+<h2 id="total"></h2>
+
+<button onclick="clearCart()">Clear Cart</button>
+
+<button onclick="location.href='checkout.html'">
+Checkout
+</button>
+
+<script>
+
+let cart =
+JSON.parse(localStorage.getItem("cart")) || [];
+
+let inventory =
+JSON.parse(localStorage.getItem("inventory")) || [];
+
+function saveData(){
+localStorage.setItem("cart",JSON.stringify(cart));
+localStorage.setItem("inventory",JSON.stringify(inventory));
+}
+
+function restoreStock(name,amount){
+
+let product=
+inventory.find(p=>p.name===name);
+
+if(product){
+product.stock+=amount;
+}
+
+}
+
+function changeQty(index,amount){
+
+const item=cart[index];
+
+if(amount>0){
+
+let product=
+inventory.find(
+p=>p.name===item.name
+);
+
+if(product.stock<=0){
+alert("Out of Stock");
+return;
+}
+
+item.quantity++;
+product.stock--;
+
+}else{
+
+item.quantity--;
+
+restoreStock(item.name,1);
+
+if(item.quantity<=0){
+cart.splice(index,1);
+}
+
+}
+
+saveData();
+renderCart();
+}
+
+function removeItem(index){
+
+const item=cart[index];
+
+restoreStock(item.name,item.quantity);
+
+cart.splice(index,1);
+
+saveData();
+
+renderCart();
+}
+
+function clearCart(){
+
+cart.forEach(item=>{
+
+restoreStock(
+item.name,
+item.quantity
+);
+
+});
+
+cart=[];
+
+saveData();
+
+renderCart();
+}
+
+function renderCart(){
+
+let total=0;
+
+const container=
+document.getElementById("cartItems");
+
+container.innerHTML="";
+
+cart.forEach((item,index)=>{
+
+total+=item.price*item.quantity;
+
+container.innerHTML+=`
+<div class="card">
+
+<h3>${item.name}</h3>
+
+<p>Price: $${item.price}</p>
+
+<p>Quantity: ${item.quantity}</p>
+
+<button onclick="changeQty(${index},-1)">-</button>
+
+<button onclick="changeQty(${index},1)">+</button>
+
+<button onclick="removeItem(${index})">
+Remove
+</button>
+
+</div>
+`;
+
+});
+
+document.getElementById("total")
+.textContent =
+"Total: $" + total.toFixed(2);
+
+}
+
+renderCart();
+
+</script>
+
+</body>
+</html>
